@@ -1,0 +1,22 @@
+﻿.grid-style {
+    width: 90%;
+    margin: 20px auto; /* centraliza e dá espaçamento */
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 18px; /* fonte maior */
+}
+
+    .grid-style th, .grid-style td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .grid-style th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    .grid-style tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }

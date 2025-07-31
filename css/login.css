@@ -1,0 +1,193 @@
+﻿:root {
+    --azulHspm: #29336b;
+    --verdeHspm: #3b7b92;
+    --branco: #ffffff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(38, 51, 107, 0.2);
+}
+
+.login__titulo {
+    padding-top: 1rem;
+    color: var(--azulHspm);
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-decoration:underline var(--verdeHspm);
+}
+
+.login__container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+    background-color: var(--branco);
+    border-radius: 16px;
+    margin-bottom: 4rem;
+}
+
+.login__imagem{
+    width:65%;
+    display:flex;
+    align-items:center;
+}
+
+.login__imagem img{
+    width: 95%;
+    border-radius: 16px;
+}
+
+.login__box {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.lista-locais {
+    font-size: 16px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.login__box-autentica {
+    padding-bottom: 2rem;
+}
+
+.login__box-autentica h2 {
+    color: var(--azulHspm);
+    margin-bottom: 2rem;
+    text-align:center;
+}
+
+.login__box-autentica input[type="text"],
+.login__box-autentica input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.login__box-autentica input[type="submit"],
+.login__box-autentica input[type="button"],
+.login__box-autentica button,
+.login__box-autentica .aspNet-Button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #337ab7;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .login__box-autentica input[type="submit"]:hover,
+    .login__box-autentica input[type="button"]:hover,
+    .login__box-autentica button:hover {
+        background-color: #286090;
+    }
+
+#btnLogin{
+    border: 1px solid var(--azulHspm);
+    background-color:transparent;
+    color: var(--azulHspm);
+    padding: .75rem 2rem;
+    font-weight: 600;
+}
+
+    #btnLogin:hover {
+        border: none;
+        background-color: var(--azulHspm);
+        color: var(--branco);
+        
+    }
+
+.login__box-informacao {
+    padding: 1rem;
+    background-color: #dcdcdc;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.login__box-informacao-titulo{
+    font-size: 1rem;
+    color: var(--verdeHspm);
+    margin-bottom: 1rem;
+}
+
+.list{
+    text-align:left;
+    margin: 0 1rem;
+}
+
+.list__item {
+    list-style-type: disc;
+    margin-bottom: .5rem;
+    font-size: .8rem;
+}
+
+.login__logo {
+    width: 100%;
+    text-align: center;
+}
+
+.logo{
+    width: 170px;
+    padding-top: 1rem;
+}
+
+.logo__hspm {
+    width: 80px
+}
+
+.logo__PMSP {
+    width: 120px
+}
+
+.login__box-informacao-texto{
+    margin-top:1rem;
+    font-size: .8rem
+}
+
+.login__box-botao{
+    text-align:center;
+}
+
+footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--azulHspm);
+    color: var(--branco);
+    text-align: center;
+    font-size: .9rem;
+}
+
+footer p{
+    padding: .5rem 0;
+}
+
+@media(max-width:1700px){
+    .login__box-autentica{
+        padding-top: 1rem;
+    }
+}

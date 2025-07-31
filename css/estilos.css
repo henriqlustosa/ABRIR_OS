@@ -1,0 +1,63 @@
+﻿@import url('masterPage.css');
+@import url('SolicitarOS.css');
+@import url('login.css');
+
+:root {
+    /* Cores */
+    --azul-10: #e9eaf0;
+    --azul-20: #d3d5e0;
+    --azul-30: #bcbfd1;
+    --azul-40: #a9adc4;
+    --azul-50: #9499b5;
+    --azul-60: #8085a6;
+    --azul-70: #697096;
+    --azul-80: #545c8a;
+    --azul-90: #3e477a;
+    --azul-100: #29336b;
+    --verde-10: #ebf3f5;
+    --verde-20: #d8e4e8;
+    --verde-30: #c3d7de;
+    --verde-40: #b2cbd4;
+    --verde-50: #9dbcc7;
+    --verde-60: #8ab1bf;
+    --verde-70: #76a2b3;
+    --verde-80: #6295a8;
+    --verde-90: #4f899e;
+    --verde-100: #3b7b92;
+    --cinza-dark: #1C1C1C;
+    --cinza-light: #DCDCDC;
+    --branco: #ffffff;
+    --cor-de-fundo: #f0f0f0;
+    /*Fonte*/
+    --fonte-titulo: Courier New, Courier, monospace;
+    --fonte-master-page: 'Times New Roman', Times, serif;
+    --fonte: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Tamanhos de fonte */
+    --font-size-xxxl: 4.5rem;
+    --font-size-xxl: 2.625rem;
+    --fonte-size-xl: 2.438rem;
+    --fonte-size-l: 1.938rem;
+    --fonte-size-xm: 1.563rem;
+    --fonte-size-m: 1.25rem;
+    --fonte-size-b: 1rem;
+    --fonte-size-s: 0.813rem;
+    /* Altura da linhas */
+    --line-height: 120%;
+    /* Espaçamentos */
+    --padding-xs: 0.25rem;
+    --padding-s: 0.5rem;
+    --padding-m: 1rem;
+    --padding-l: 1.5rem;
+    --padding-xl: 2rem;
+    --padding-xxl: 2.5rem;
+    --padding-3xl: 3.75rem;
+    --padding-4xl: 4rem;
+    --padding-5xl: 4.75rem;
+    --gap-xs: 0.25rem;
+    --gap-s: 0.5rem;
+    --gap-m: 1rem;
+    --gap-l: 1.5rem;
+    --gap-xl: 2rem;
+    --gap-xxl: 2.5rem;
+    --gap-xxxl: 6rem;
+}

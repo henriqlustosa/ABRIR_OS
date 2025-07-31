@@ -1,0 +1,140 @@
+﻿/*Header*/
+header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.headerTop {
+    width: 100%;
+    background-color: var(--azul-100);
+}
+
+.imgHeaderHspm {
+    margin-left: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 50px;
+    width: auto;
+    z-index: 2;
+    transform: translateY(-50%);
+}
+
+.titleHeader {
+    text-align: center;
+    color: var(--branco);
+    font-size: var(--fonte-size-xm);
+    padding: var(--padding-s) 0;
+    font-family: var(--fonte-master-page);
+}
+
+.titleHeaderToPhone {
+    display: none;
+}
+
+.imgHeaderPmsp {
+    margin-right: 2rem;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 50px;
+    width: auto;
+    z-index: 2;
+    transform: translateY(-50%);
+}
+
+.headerNomeSistema {
+    text-align: center;
+    color: var(--branco);
+    background-color: var(--azul-80);
+}
+
+/*Nome do sistema*/
+.nomeDoSistema {
+    font-size: var(--fonte-size-m);
+    padding: var(--padding-s) 0;
+    font-family: var(--fonte-master-page);
+}
+
+/*Menu*/
+.menu {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--azul-50);
+    color: var(--branco);
+    padding: 0.6rem var(--padding-xl);
+}
+
+.menuLista {
+    display: flex;
+    align-items: center;
+    column-gap: 2rem;
+}
+
+.menuLink {
+    color: var(--branco);
+    font-size: var(--fonte-size-m);
+    text-decoration: none;
+    font-weight: 400;
+    position: relative;
+}
+
+    .menuLink:hover {
+        background-color: var(--azul-70);
+        padding: .4rem 0;
+    }
+
+    .menuLink::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--branco);
+        transition: width 0.3s ease;
+    }
+
+    .menuLink:hover::after,
+    .menuLink:focus::after {
+        width: 20%;
+    }
+
+    /* Mudando a cor do traço e do fundo quando o item está ativo */
+    .menuLink.ativo::after {
+        width: 100%; /* Traço fixo ao estar ativo */
+    }
+
+    /* Opcional: mudar o fundo também quando o item estiver ativo */
+    .menuLink.ativo {
+        color: var(--branco); /* Cor do texto quando ativo */
+        background-color: var(--azul-70);
+        padding: .3rem .5rem;
+    }
+
+
+.box__login {
+    text-decoration: none;
+    font-size: var(--fonte-size-m);
+    color: var(--branco);
+    padding-left: var(--padding-m);
+}
+
+/*Footer*/
+footer {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    background-color: var(--azul-100);
+    color: var(--branco);
+    width: 100%;
+}
+
+.footer {
+    font-size: var(--fonte-size-b);
+    padding: var(--padding-s);
+    font-family: var(--fonte-master-page);
+}

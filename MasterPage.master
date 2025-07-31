@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <link href="css/masterPage.css?v=1" rel="stylesheet" />
+        <link href="css/estilos.css?v=1" rel="stylesheet" />
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header>
+            <div class="headerTop">
+                <img class="imgHeaderHspm" src="imagem/hspmBranco.png" />
+                <div>
+                    <h2 class="titleHeader">HOSPITAL DO SERVIDOR PÚBLICO MUNICIPAL DE SÃO PAULO</h2>
+                </div>
+                <img class="imgHeaderPmsp" src="imagem/prefeituraBranco.png" />
+            </div>
+            <div class="headerNomeSistema">
+                <h3 class="nomeDoSistema">ORDEM DE SERVIÇO</h3>
+            </div>
+        </header>
+        <div class="menu">
+            <nav class="navegacao">
+                <ul class="menuLista">
+                    <li class="menuItem">
+                        <a class="menuLink" href="SolicitarOS.aspx">Solicitar ordem de serviço</a>
+                    </li>
+                    <li class="menuItem">
+                        <a class="menuLink" href="HistoricoOS.aspx">Histórico</a>
+                    </li>                  
+                      <li class="menuItem">
+                        <a class="menuLink" href="CentroCustoEquipe.aspx">Centro de Custo Equipe</a>
+                    </li>
+                      <li class="menuItem">
+                                        <asp:LoginStatus runat="server" class="menuLink" LogoutAction="RedirectToLoginPage" LoginText="SAIR DO SISTEMA"></asp:LoginStatus>
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <footer>
+            <p class="footer">DITEC - Divisão de Tecnologia da Informação - hspminformatica@hspm.sp.gov.br </p>
+        </footer>
+        <script src="js/menu.js"></script>
+    </form>
+</body>
+</html>
