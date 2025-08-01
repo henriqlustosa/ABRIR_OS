@@ -42,6 +42,7 @@ public partial class HistoricoOS : System.Web.UI.Page
         gdvCentroCustoEquipe.DataSource = lista;
         gdvCentroCustoEquipe.DataBind();
     }
+
     //protected void gdvHistorico_RowCommand(object sender, GridViewCommandEventArgs e)
     //{
     //    int idSolicitacao = Convert.ToInt32(gdvCentroCustoEquipe.DataKeys[Convert.ToInt32(e.CommandArgument)].Value.ToString());

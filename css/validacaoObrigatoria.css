@@ -1,0 +1,24 @@
+﻿/* Estilo para destacar campos obrigatórios que não foram preenchidos */
+
+.erro-campo {
+    border: 2px solid red !important;
+    background-color: #fff0f0;
+    position: relative;
+}
+
+    /* Adiciona um asterisco vermelho no canto superior direito do campo */
+    .erro-campo::after {
+        content: "*";
+        color: red;
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+/* Ajustes para campos tipo multiline como TextMode="MultiLine" */
+textarea.erro-campo {
+    min-height: 60px;
+    padding-right: 20px;
+}

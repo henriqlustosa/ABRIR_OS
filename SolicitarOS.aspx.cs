@@ -1,65 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class SolitarOS : System.Web.UI.Page
+public partial class SolicitarOS : Page
 {
-    public static class VariaveisGlobais
-    {
-        public static string login { get; set; }
-        public static string nomeUsuario { get; set; }
-        public static int codRespCusto { get; set; }
-    }
     protected void Page_Load(object sender, EventArgs e)
+    {
+        ConfigurarCache();
+
+        if (!ValidarSessaoUsuario()) return;
+
+        if (!IsPostBack)
+        {
+            SessionWrapper.Login = Session["login"] as string;
+            SessionWrapper.NomeUsuario = Session["nomeUsuario"] as string;
+
+            try
+            {
+                CarregarDadosUsuario(SessionWrapper.Login);
+                CarregarDropDownSetores(SessionWrapper.Login);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensagem("Erro ao carregar dados: " + ex.Message);
+            }
+        }
+
+        AjustarCorDropDownSetor();
+    }
+
+    private void ConfigurarCache()
     {
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
         Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
         Response.Cache.SetNoStore();
         Response.Cache.SetAllowResponseInBrowserHistory(false);
-
-
-        // 1. Verifica se o usuário está logado (existe sessão)
-        if (Session["login"] == null)
-        {
-            Response.Redirect("~/login.aspx"); // Redireciona se não estiver logado
-            return;
-        }
-        // 2. Verifica se o perfil é diferente de "1" (Administrador)
-        List<int> perfis = Session["perfis"] as List<int>;
-        if (perfis == null || ((!perfis.Contains(1)) && (!perfis.Contains(2)) && (!perfis.Contains(3))))
-        {
-            Response.Redirect("~/aberto/SemPermissao.aspx");
-        }
-        VariaveisGlobais.nomeUsuario = Session["nomeUsuario"] as string;
-        VariaveisGlobais.login = Session["login"] as string;
-        if (!this.IsPostBack)
-        {
-            carregaDadosUsuario(VariaveisGlobais.login);
-            CarregarDropDownSetores(VariaveisGlobais.login);
-            //CarregarDropDownSetoresSolicitados();
-        }
-        if (ddlSetor.SelectedItem.Text == "-- Selecione um Centro de Custo --")
-        {
-            ddlSetor.Attributes.Add("style", "color : red;");
-        }
-        else
-        {
-            ddlSetor.Attributes.Add("style", "color : black;");
-        }
-     
     }
 
-    private void carregaDadosUsuario(string login)
+    private bool ValidarSessaoUsuario()
     {
-        List<SolicitanteDados> lista = OsDAO.carregaDadosUsuRespCentroDeCusto(login);
-
-        foreach (var i in lista)
+        if (string.IsNullOrEmpty(SessionWrapper.Login))
         {
-            txtNomeUsuario.Text = i.nomeSolicitante;
-            txtRfUsuario.Text = i.rfSolicitante;
+            Response.Redirect("~/login.aspx");
+            return false;
+        }
+
+        List<int> perfis = SessionWrapper.Perfis;
+        if (perfis == null || !(perfis.Contains(1) || perfis.Contains(2) || perfis.Contains(3)))
+        {
+            Response.Redirect("~/aberto/SemPermissao.aspx");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void CarregarDadosUsuario(string login)
+    {
+        List<SolicitanteDados> lista = OsDAO.CarregaDadosUsuarioEResponsavel(login);
+        if (lista.Count > 0)
+        {
+            SolicitanteDados dados = lista[0];
+            txtNomeUsuario.Text = dados.nomeSolicitante;
+            txtRfUsuario.Text = dados.rfSolicitante;
         }
     }
 
@@ -68,153 +73,174 @@ public partial class SolitarOS : System.Web.UI.Page
         List<SolicitanteDados> lista = OsDAO.BuscarCentroDeCustoPorLogin(login);
 
         ddlSetor.DataSource = lista;
-        ddlSetor.DataTextField = "descricaoCentroCusto";   // Vai aparecer no dropdown
-        ddlSetor.DataValueField = "codCentroCusto";     // Vai ser o valor interno
+        ddlSetor.DataTextField = "descricaoCentroCusto";
+        ddlSetor.DataValueField = "codCentroCusto";
         ddlSetor.DataBind();
+
         if (lista.Count > 1)
         {
             ddlSetor.Items.Insert(0, new ListItem("-- Selecione um Centro de Custo --", ""));
-            //ddlSetor.Items[0].Attributes.CssStyle.Add("color", "red");
         }
-        else
+        else if (lista.Count == 1)
         {
-            txtCentrodeCusto.Text = ddlSetor.SelectedValue;
-            List<SolicitanteDados> lista2 = OsDAO.BuscarCentroDeCustoPorCentroDeCusto(txtCentrodeCusto.Text);
-            foreach (var i in lista2)
-            {
-                txtNomeResponsavel.Text = i.nomeResponsavel_Custo;
-                txtRfResponsavel.Text = i.rfResponsavelCusto;
-                VariaveisGlobais.codRespCusto = i.codRespCentroCusto;
-            }
+            ddlSetor.SelectedIndex = 0;
+            PreencherResponsavelCentroCusto(ddlSetor.SelectedValue);
         }
     }
+
+    private void AjustarCorDropDownSetor()
+    {
+        string cor = "black";
+        if (ddlSetor.SelectedItem != null && ddlSetor.SelectedItem.Text == "-- Selecione um Centro de Custo --")
+        {
+            cor = "red";
+        }
+        ddlSetor.Attributes["style"] = "color: " + cor + ";";
+    }
+
     protected void ddlSetor_SelectedIndexChanged(object sender, EventArgs e)
     {
         txtNomeResponsavel.Text = "";
         txtRfResponsavel.Text = "";
         txtCentrodeCusto.Text = ddlSetor.SelectedValue;
-        List<SolicitanteDados> lista = OsDAO.BuscarCentroDeCustoPorCentroDeCusto(txtCentrodeCusto.Text);
-        foreach (var i in lista)
+
+        try
         {
-            txtNomeResponsavel.Text = i.nomeResponsavel_Custo;
-            txtRfResponsavel.Text = i.rfResponsavelCusto;
-            VariaveisGlobais.codRespCusto = i.codRespCentroCusto;
+            PreencherResponsavelCentroCusto(txtCentrodeCusto.Text);
+        }
+        catch (Exception ex)
+        {
+            MostrarMensagem("Erro ao carregar responsável do setor: " + ex.Message);
+        }
+    }
+
+    private void PreencherResponsavelCentroCusto(string codCentroCusto)
+    {
+        List<SolicitanteDados> lista = OsDAO.BuscarResponsavelPorCentroDeCusto(codCentroCusto);
+        if (lista.Count > 0)
+        {
+            SolicitanteDados item = lista[0];
+            txtNomeResponsavel.Text = item.nomeResponsavel_Custo;
+            txtRfResponsavel.Text = item.rfResponsavelCusto;
+            SessionWrapper.CodRespCusto = item.codRespCentroCusto;
         }
     }
 
     protected void btnPesquisarPatrimonio_Click(object sender, EventArgs e)
     {
         txtEquipamento.Text = "";
-        if (txtPatrimonio.Text.Length < 1)
+
+        int chapa;
+        if (!int.TryParse(txtPatrimonio.Text.Trim(), out chapa))
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Informe um numero de patrimonio valido!');", true);
+            MostrarMensagem("<strong>Aviso:</strong> Informe um número de patrimônio válido!");
             return;
         }
-        int chapa = Convert.ToInt32(txtPatrimonio.Text);
-        List<SolicitanteDados> lista = OsDAO.BuscarPatrimonio(chapa);
-        foreach (var i in lista)
-        {
-            // txt.Text = i.nomeResponsavel_Custo;
-            txtEquipamento.Text = i.equipamentoDesc;
-        }
-        if (lista.Count == 0)
-        {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem",
-      "alert('Patrimônio Nº " + chapa +
-      " não encontrado.\\nVerifique o número.\\nSe não existir cadastro, descreva o equipamento no campo Equipamento:.');",
-      true);
 
+        try
+        {
+            List<SolicitanteDados> lista = OsDAO.BuscarPatrimonio(chapa);
+            if (lista.Count > 0)
+            {
+                txtEquipamento.Text = lista[0].equipamentoDesc;
+            }
+            else
+            {
+                MostrarMensagem("<strong>Patrimônio Nº " + chapa + "</strong> não encontrado.<br>Verifique o número.<br>Se não existir cadastro, descreva o equipamento no campo <strong>Equipamento</strong>.");
+            }
+        }
+        catch (Exception ex)
+        {
+            MostrarMensagem("Erro ao buscar patrimônio: " + ex.Message);
         }
     }
 
-    //private void CarregarDropDownSetoresSolicitados()
-    //{
-    //    List<SolicitanteDados> lista = OsDAO.BuscarSetoresSolicitados();
-
-    //    ddlSetorSolicitado.DataSource = lista;
-    //    ddlSetorSolicitado.DataTextField = "setorSolicitadoDesc";   // Vai aparecer no dropdown
-    //    ddlSetorSolicitado.DataValueField = "codSetorSolicitado";     // Vai ser o valor interno
-    //    ddlSetorSolicitado.DataBind();
-    //    if (lista.Count > 1)
-    //    {
-    //        ddlSetorSolicitado.Items.Insert(0, new ListItem("-- Selecione um setor --", ""));
-    //        //ddlSetor.Items[0].Attributes.CssStyle.Add("color", "red");
-    //    }
-
-    //}
-
-    //protected void ddlSetorSolicitado_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    if (ddlSetorSolicitado.SelectedItem.Text == "-- Selecione um setor --")
-    //    {
-    //        ddlSetorSolicitado.Attributes.Add("style", "color : red;");
-    //    }
-    //    else
-    //    {
-    //        ddlSetorSolicitado.Attributes.Add("style", "color : black;");
-    //    }
-    //}
-
     protected void btnSolicitarOS_Click(object sender, EventArgs e)
     {
-        if (/*ddlSetorSolicitado.SelectedItem.Text == "-- Selecione um setor --" ||*/ ddlSetor.SelectedItem.Text == "-- Selecione um Centro de Custo --"
-         || txtRamalUsuario.Text.Length < 4 || txtEquipamento.Text.Length < 2 || txtAndar.Text.Length < 1 || txtLocal.Text.Length < 1 || txtDescricao.Text.Length < 2)
+        if (!ValidarCamposObrigatorios()) return;
+
+        try
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Aviso! \\nObrigatório Centro de Custo" +
-                "\\nObrigatório Setor que realizará o serviço \\nObrigatório informar equipamento\\nObrigatório Descrição do serviço", true);
-            return;
+            SolicitanteDados solicitacao = CriarSolicitacao();
+
+            if (solicitacao.codRespCentroCusto < 1)
+            {
+                RedirecionarComAlerta("Algo deu errado. Tente novamente.");
+                return;
+            }
+
+            List<SolicitanteDados> osAbertas = OsDAO.VerificaOsAbertaPatrimonio(solicitacao.codPatrimonio);
+            if (osAbertas.Count > 0)
+            {
+                SolicitanteDados os = osAbertas[0];
+                string mensagem = "<strong>Já existe uma OS aberta para esse Patrimônio</strong><br>" +
+                                  "Nº Ordem de Serviço: <strong>" + os.idSolicitacao + "</strong><br>" +
+                                  "Solicitante: " + os.nomeSolicitante + "<br>" +
+                                  "Data Solicitação: " + os.dataSolicitacao + "<br>" +
+                                  "Status: " + os.statusSolicitacao;
+                MostrarMensagem(mensagem);
+                return;
+            }
+
+            int nPedido = OsDAO.GravaSolicitacaoOS(solicitacao);
+            if (nPedido > 0)
+            {
+                RedirecionarComAlerta("Solicitação gravada com sucesso!<br><strong>Número da Solicitação: " + nPedido + "</strong>");
+            }
+            else
+            {
+                MostrarMensagem("Erro! Solicitação não foi gravada.");
+            }
+        }
+        catch (Exception ex)
+        {
+            MostrarMensagem("Erro ao solicitar OS: " + ex.Message);
+        }
+    }
+
+    private bool ValidarCamposObrigatorios()
+    {
+        string textoSelecionado = ddlSetor.SelectedItem != null ? ddlSetor.SelectedItem.Text : "";
+
+        if (textoSelecionado == "-- Selecione um Centro de Custo --" ||
+            txtRamalUsuario.Text.Length < 4 ||
+            txtEquipamento.Text.Length < 2 ||
+            txtAndar.Text.Length < 1 ||
+            txtLocal.Text.Length < 1 ||
+            txtDescricao.Text.Length < 2)
+        {
+            MostrarMensagem("Preencha todos os campos obrigatórios:<br>- Centro de Custo<br>- Equipamento<br>- Descrição<br>- Ramal, Andar e Local");
+            return false;
         }
 
+        return true;
+    }
 
+    private SolicitanteDados CriarSolicitacao()
+    {
         SolicitanteDados s = new SolicitanteDados();
         s.codCentroCusto = Convert.ToInt32(txtCentrodeCusto.Text);
-        s.codRespCentroCusto = VariaveisGlobais.codRespCusto;
-        if (s.codRespCentroCusto < 1)
-        {
-            string answer = "Algo deu Errado, Tente novamente";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
-                        "alert('" + answer + "'); window.location.href='SolicitarOS.aspx';", true);
-            return;
-        }
-        s.loginSolicitante = VariaveisGlobais.login;
+        s.codRespCentroCusto = SessionWrapper.CodRespCusto;
+        s.loginSolicitante = SessionWrapper.Login;
         s.rfSolicitante = txtRfUsuario.Text;
         s.codPatrimonio = Convert.ToInt32(txtPatrimonio.Text);
-        //s.codSetorSolicitado = Convert.ToInt32(ddlSetorSolicitado.SelectedValue);
         s.andar = txtAndar.Text;
         s.localDaSolicitacao = txtLocal.Text;
         s.descServicoSolicitado = txtDescricao.Text;
         s.obs = txtObs.Text;
         s.ramalSolicitante = txtRamalUsuario.Text;
         s.ramalRespSetor = txtRamalResponsavel.Text;
-        List<SolicitanteDados> l = OsDAO.VerificaOsAbertaPatrimonio(s.codPatrimonio);// Verificar se tem OS aberta para esse patrimonio
-        foreach (var i in l)
-        {
-            if (l.Count > 0)
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Já existem uma OS aberta para esse Patrimônio\\n" +
-                    "Nº Ordem de Serviço: " + i.idSolicitacao+ "\\n" +
-                    "Solicitante: "+i.nomeSolicitante+"\\n" +
-                    "Data Solicitação: "+i.dataSolicitacao+"\\n" +
-                    "Status: "+i.statusSolicitacao+"');", true);
-                return;
-            }
-
-        }
-       
-        int nPedido = OsDAO.GravaSolicitacaoOS(s);
-        if (nPedido > 0)
-        {
-            //  ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Solicitação Gravada com suecesso! \\n Numero da sua Solicitação é "+nPedido+"');", true);
-            string answer = "Solicitação Gravada com suecesso! \\n Numero da sua Solicitação é " + nPedido + "";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
-                        "alert('" + answer + "'); window.location.href='SolicitarOS.aspx';", true);
-        }
-        else
-        {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Erro! \\n solicitação não foi gravada!');", true);
-        }
-
+        return s;
     }
 
+    private void MostrarMensagem(string msgHtml)
+    {
+        ScriptManager.RegisterStartupScript(this, GetType(), "msgModal", "MostrarMensagem('" + msgHtml.Replace("'", "\\'") + "');", true);
+    }
 
+    private void RedirecionarComAlerta(string msgHtml)
+    {
+        string script = "MostrarMensagem('" + msgHtml.Replace("'", "\\'") + "'); setTimeout(function(){ window.location.href='SolicitarOS.aspx'; }, 4000);";
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", script, true);
+    }
 }
