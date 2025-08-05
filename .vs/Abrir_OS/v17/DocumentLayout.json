@@ -1,44 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\solicitaros.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:solicitaros.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\solicitaros.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:solicitaros.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\css\\validacaoobrigatoria.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:css\\validacaoobrigatoria.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\css\\modal.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:css\\modal.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\masterpage.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:masterpage.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\app_code\\persistencia\\osdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:app_code\\persistencia\\osdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\centrocustoequipe.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:centrocustoequipe.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\historicoos.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:historicoos.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|g:\\onedrive - default directory\\onedrive - rede.sp\\projeto_ordem_servico\\os_usuario\\abrir_os\\app_code\\sessionwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A20F95B4-704F-E4E3-0456-DE0AB52B622D}|G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS|solutionrelative:app_code\\sessionwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -46,128 +9,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 259,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "validacaoObrigatoria.css",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\css\\validacaoObrigatoria.css",
-              "RelativeDocumentMoniker": "css\\validacaoObrigatoria.css",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\css\\validacaoObrigatoria.css",
-              "RelativeToolTip": "css\\validacaoObrigatoria.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-01T21:26:57.611Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "modal.css",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\css\\modal.css",
-              "RelativeDocumentMoniker": "css\\modal.css",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\css\\modal.css",
-              "RelativeToolTip": "css\\modal.css",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAgwDwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-01T20:50:09.821Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MasterPage.master",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\MasterPage.master",
-              "RelativeDocumentMoniker": "MasterPage.master",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\MasterPage.master",
-              "RelativeToolTip": "MasterPage.master",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-08-01T20:37:47.637Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CentroCustoEquipe.aspx.cs",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\CentroCustoEquipe.aspx.cs",
-              "RelativeDocumentMoniker": "CentroCustoEquipe.aspx.cs",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\CentroCustoEquipe.aspx.cs",
-              "RelativeToolTip": "CentroCustoEquipe.aspx.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAA5wCwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T20:19:59.611Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "HistoricoOS.aspx.cs",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\HistoricoOS.aspx.cs",
-              "RelativeDocumentMoniker": "HistoricoOS.aspx.cs",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\HistoricoOS.aspx.cs",
-              "RelativeToolTip": "HistoricoOS.aspx.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T20:13:30.174Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "OsDAO.cs",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\App_Code\\Persistencia\\OsDAO.cs",
-              "RelativeDocumentMoniker": "App_Code\\Persistencia\\OsDAO.cs",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\App_Code\\Persistencia\\OsDAO.cs",
-              "RelativeToolTip": "App_Code\\Persistencia\\OsDAO.cs",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAuwPYAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T15:49:47.704Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "SessionWrapper.cs",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\App_Code\\SessionWrapper.cs",
-              "RelativeDocumentMoniker": "App_Code\\SessionWrapper.cs",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\App_Code\\SessionWrapper.cs",
-              "RelativeToolTip": "App_Code\\SessionWrapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T15:24:13.229Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SolicitarOS.aspx.cs",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\SolicitarOS.aspx.cs",
-              "RelativeDocumentMoniker": "SolicitarOS.aspx.cs",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\SolicitarOS.aspx.cs",
-              "RelativeToolTip": "SolicitarOS.aspx.cs",
-              "ViewState": "AgIAANoAAAAAAAAAAAAlwO0AAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T15:02:46.283Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SolicitarOS.aspx",
-              "DocumentMoniker": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\SolicitarOS.aspx",
-              "RelativeDocumentMoniker": "SolicitarOS.aspx",
-              "ToolTip": "G:\\OneDrive - Default Directory\\OneDrive - rede.sp\\PROJETO_ORDEM_SERVICO\\OS_USUARIO\\Abrir_OS\\SolicitarOS.aspx",
-              "RelativeToolTip": "SolicitarOS.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-08-01T15:02:44.684Z",
-              "EditorCaption": ""
             }
           ]
         },
