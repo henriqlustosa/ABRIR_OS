@@ -21,7 +21,9 @@ public partial class Login : System.Web.UI.Page
     // Evento disparado ao clicar no botão de login
     protected void btnLogin_Click(object sender, EventArgs e)
     {
-        string login = txtUsuario.Text.Trim(); // Usuário digitado
+        // Opção recomendada (independente de cultura)
+        string login = (txtUsuario.Text ?? string.Empty).Trim().ToUpperInvariant();
+
         string senha = txtSenha.Text.Trim();   // Senha digitada
 
         try
@@ -60,7 +62,7 @@ public partial class Login : System.Web.UI.Page
 
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["hspm_OSConnectionString"].ToString()))
                 {
-                    string sql = "SELECT Id FROM Usuarios WHERE LoginRede = @LoginRede AND Ativo = 1";
+                    string sql = "SELECT UsuarioId FROM Usuarios WHERE LoginRede = @LoginRede AND Ativo = 1";
                     SqlCommand cmd = new SqlCommand(sql, con);
                     cmd.Parameters.AddWithValue("@LoginRede", login);
 
@@ -84,9 +86,9 @@ public partial class Login : System.Web.UI.Page
                 using (SqlConnection con2 = new SqlConnection(ConfigurationManager.ConnectionStrings["hspm_OSConnectionString"].ToString()))
                 {
                     string query = @"
-                        SELECT up.PerfilId
-                        FROM UsuariosPerfis up
-                        WHERE up.UsuarioId = @UsuarioId";
+                            SELECT up.idPerfil
+                                FROM UsuarioPerfil up                          
+                                WHERE up.UsuarioId = @UsuarioId";
 
                     SqlCommand cmd2 = new SqlCommand(query, con2);
                     cmd2.Parameters.AddWithValue("@UsuarioId", usuarioId);
@@ -96,7 +98,7 @@ public partial class Login : System.Web.UI.Page
                     while (reader.Read())
                     {
                         // Adiciona cada perfil à lista
-                        perfisDoUsuario.Add(Convert.ToInt32(reader["PerfilId"]));
+                        perfisDoUsuario.Add(Convert.ToInt32(reader["idPerfil"]));
                     }
 
                     reader.Close();

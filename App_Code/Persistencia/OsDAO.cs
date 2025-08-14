@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 /// <summary>
@@ -22,9 +23,9 @@ public class OsDAO
         using (SqlConnection con = new SqlConnection(connectionString))
         {
             string query = @"
-                SELECT NomeCompleto, loginRede, rf_usuario, RSP_A_NOME, rf_responsavel_custo, SET_A_DES, Codigo_centroCusto
+                SELECT [nomeUsuario],[loginRedeUsuario],[rfResponsavel],[nomeResponsavel],[descricao],[codigoCentroDeCusto],[rfUsuario]
                 FROM Vw_DadosUsuario_DadosRespCusto
-                WHERE loginRede = @loginRede";
+                WHERE loginRedeUsuario = @loginRede";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@loginRede", login.Trim());
@@ -34,13 +35,15 @@ public class OsDAO
             while (dr.Read())
             {
                 var s = new SolicitanteDados();
-                s.nomeSolicitante = dr["NomeCompleto"] as string;
-                s.loginSolicitante = dr["loginRede"] as string;
-                s.rfSolicitante = dr["rf_usuario"] as string;
-                s.nomeResponsavel_Custo = dr["RSP_A_NOME"] as string;
-                s.rfResponsavelCusto = dr["rf_responsavel_custo"] as string;
-                s.descricaoCentroCusto = dr["SET_A_DES"] as string;
-                s.codCentroCusto = Convert.ToInt32(dr["Codigo_centroCusto"]);
+                s.nomeSolicitante = dr["nomeUsuario"] as string;
+                s.loginSolicitante = dr["loginRedeUsuario"] as string;
+                s.rfSolicitante = dr["rfUsuario"] as string;
+                s.nomeResponsavel_Custo = dr["nomeResponsavel"] as string;
+                s.rfResponsavelCusto = dr["rfResponsavel"] as string;
+                s.descricaoCentroCusto = dr["descricao"] as string;
+                s.codCentroCusto = Convert.ToInt32(dr["codigoCentroDeCusto"]);
+
+                s.rfUsuario = Convert.ToInt32(dr["rfUsuario"]);
                 lista.Add(s);
             }
         }
@@ -78,9 +81,9 @@ public class OsDAO
         using (SqlConnection con = new SqlConnection(connectionString))
         {
             string query = @"
-                SELECT SET_A_COD, SET_A_DES
+                SELECT  [codigoCentroDeCusto],[descricaoCentroDeCusto]
                 FROM Vw_Usuario_CentroDeCusto
-                WHERE loginRede = @loginRede";
+                WHERE LoginDeRedeUsuario = @loginRede";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@loginRede", login);
@@ -90,8 +93,8 @@ public class OsDAO
             while (reader.Read())
             {
                 var s = new SolicitanteDados();
-                s.codCentroCusto = Convert.ToInt32(reader["SET_A_COD"]);
-                s.descricaoCentroCusto = reader["SET_A_COD"] + " - " + reader["SET_A_DES"].ToString();
+                s.codCentroCusto = Convert.ToInt32(reader["codigoCentroDeCusto"]);
+                s.descricaoCentroCusto = reader["codigoCentroDeCusto"] + " - " + reader["descricaoCentroDeCusto"].ToString();
                 lista.Add(s);
             }
         }
@@ -109,9 +112,9 @@ public class OsDAO
         using (SqlConnection con = new SqlConnection(connectionString))
         {
             string query = @"
-                SELECT RSP_A_NOME, rf_responsavel_custo, RSP_I_CODI
+                SELECT [nomeResponsavel], [rfResponsavel], loginRedeResponsavel
                 FROM Vw_DadosUsuario_DadosRespCusto
-                WHERE Codigo_centroCusto = @Codigo_centroCusto";
+                WHERE [codigoCentroDeCusto] = @Codigo_centroCusto";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@Codigo_centroCusto", centroCusto);
@@ -121,9 +124,9 @@ public class OsDAO
             while (reader.Read())
             {
                 var s = new SolicitanteDados();
-                s.nomeResponsavel_Custo = reader["RSP_A_NOME"].ToString();
-                s.rfResponsavelCusto = reader["rf_responsavel_custo"].ToString();
-                s.codRespCentroCusto = Convert.ToInt32(reader["RSP_I_CODI"]);
+                s.nomeResponsavel_Custo = reader["nomeResponsavel"].ToString();
+                s.rfResponsavelCusto = reader["rfResponsavel"].ToString();
+                s.codRespCentroCusto = reader["loginRedeResponsavel"].ToString();
                 lista.Add(s);
             }
         }
@@ -164,49 +167,128 @@ public class OsDAO
     /// <summary>
     /// Grava uma nova solicitação de OS no banco e retorna o ID gerado.
     /// </summary>
-    public static int GravaSolicitacaoOS(SolicitanteDados s)
+
+
+
+    public static int GravaSolicitacaoOS(Solicitacao_Pedido s)
     {
-        int nPedido = 0;
+        if (s == null) throw new ArgumentNullException("s");
 
-        using (SqlConnection con = new SqlConnection(connectionString))
+        int novoId;
+
+        // Use o mesmo nome de chave do field estático da classe
+        string cs = ConfigurationManager
+            .ConnectionStrings["hspm_OSConnectionString"]
+            .ConnectionString;
+
+        const string sql = @"
+INSERT INTO dbo.Solicitacao
+(
+    UsuarioSolicitanteId,
+    CentroCustoId,
+    UsuarioRespCCId,
+    ramalSolicitante,
+    ramalRespCusto,
+    patrimonio,
+    andar,
+    [local],
+    descricaoServico,
+    obs,
+    dataSolicitacao,
+    [status]
+
+)
+VALUES
+(
+    @UsuarioSolicitanteId,
+    @CentroCustoId,
+    @UsuarioRespCCId,
+    @ramalSolicitante,
+    @ramalRespCusto,
+    @patrimonio,
+    @andar,
+    @local,
+    @descricaoServico,
+    @obs,
+    @dataSolicitacao,
+    @status
+   
+);
+SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+        using (var con = new SqlConnection(cs))
+        using (var cmd = new SqlCommand(sql, con))
         {
-            string query = @"
-                INSERT INTO Solicitacao (
-                    loginSolicitante, rfSolicitante, ramalSolicitante, centroCusto, 
-                    responsavelCentroCusto, rfResponsavel, ramalRespCusto, patrimonio, 
-                    andar, local, descricaoServico, obs, dataSolicitacao, status
-                )
-                VALUES (
-                    @loginSolicitante, @rfSolicitante, @ramalSolicitante, @centroCusto, 
-                    @responsavelCentroCusto, @rfResponsavel, @ramalRespCusto, @patrimonio, 
-                    @andar, @local, @descricaoServico, @obs, @dataSolicitacao, @status
-                );
-                SELECT CAST(SCOPE_IDENTITY() AS int);";
+            // IDs obrigatórios
+            cmd.Parameters.Add("@UsuarioSolicitanteId", SqlDbType.Int).Value = s.UsuarioSolicitanteId;
+            cmd.Parameters.Add("@CentroCustoId", SqlDbType.Int).Value = s.CentroCustoId;
+            cmd.Parameters.Add("@UsuarioRespCCId", SqlDbType.Int).Value = s.UsuarioRespCCId;
 
-            SqlCommand cmd = new SqlCommand(query, con);
+            // Strings curtas (null -> DBNull)
+            cmd.Parameters.Add("@ramalSolicitante", SqlDbType.VarChar, 10)
+               .Value = (object)(s.RamalSolicitante ?? (string)null) ?? DBNull.Value;
 
-            // Parâmetros da solicitação
-            cmd.Parameters.AddWithValue("@loginSolicitante", s.loginSolicitante);
-            cmd.Parameters.AddWithValue("@rfSolicitante", (object)s.rfSolicitante ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@ramalSolicitante", s.ramalSolicitante);
-            cmd.Parameters.AddWithValue("@centroCusto", s.codCentroCusto);
-            cmd.Parameters.AddWithValue("@responsavelCentroCusto", s.codRespCentroCusto);
-            cmd.Parameters.AddWithValue("@rfResponsavel", (object)s.rfResponsavelCusto ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@ramalRespCusto", (object)s.ramalRespSetor ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@patrimonio", s.codPatrimonio);
-            cmd.Parameters.AddWithValue("@andar", s.andar);
-            cmd.Parameters.AddWithValue("@local", s.localDaSolicitacao);
-            cmd.Parameters.AddWithValue("@descricaoServico", s.descServicoSolicitado);
-            cmd.Parameters.AddWithValue("@obs", (object)s.obs ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@dataSolicitacao", DateTime.Now);
-            cmd.Parameters.AddWithValue("@status", 0); // status inicial: Aguardando
+            cmd.Parameters.Add("@ramalRespCusto", SqlDbType.VarChar, 10)
+               .Value = (object)(s.RamalRespCusto ?? (string)null) ?? DBNull.Value;
 
+            // Patrimônio (tenta converter)
+            object patrimonio = DBNull.Value;
+            if (!IsNullOrWhiteSpace(s.Patrimonio))
+            {
+                int p;
+                if (int.TryParse(s.Patrimonio, out p))
+                    patrimonio = p;
+            }
+            cmd.Parameters.Add("@patrimonio", SqlDbType.Int).Value = patrimonio;
+
+            // Demais textos
+            cmd.Parameters.Add("@andar", SqlDbType.VarChar, 20).Value = (object)(s.Andar ?? (string)null) ?? DBNull.Value;
+            cmd.Parameters.Add("@local", SqlDbType.VarChar, 100).Value = (object)(s.Local ?? (string)null) ?? DBNull.Value;
+            cmd.Parameters.Add("@descricaoServico", SqlDbType.VarChar, 1000).Value = (object)(s.DescricaoServico ?? (string)null) ?? DBNull.Value;
+            cmd.Parameters.Add("@obs", SqlDbType.VarChar, 1000).Value = (object)(s.Obs ?? (string)null) ?? DBNull.Value;
+
+            // Datas
+            cmd.Parameters.Add("@dataSolicitacao", SqlDbType.DateTime2)
+               .Value = (object)(s.DataSolicitacao != default(DateTime) ? s.DataSolicitacao : DateTime.Now);
+
+
+
+            cmd.Parameters.Add("@status", SqlDbType.Int).Value = s.Status;
+
+        
             con.Open();
-            nPedido = (int)cmd.ExecuteScalar();
+            novoId = (int)cmd.ExecuteScalar();
         }
 
-        return nPedido;
+        return novoId;
     }
+
+
+    // ==== Helpers compatíveis com C# 3.0 (.NET 3.5) ====
+
+    private static object TryParseIntOrDbNull(string valor)
+    {
+        if (valor == null) return DBNull.Value;
+
+        int n;
+        if (int.TryParse(valor, out n))
+            return n;
+
+        return DBNull.Value;
+    }
+
+    private static int ParseStatusOrDefault(string status, int defaultValue)
+    {
+        if (status == null) return defaultValue;
+
+        int n;
+        if (int.TryParse(status, out n))
+            return n;
+
+        return defaultValue;
+    }
+
+
 
     /// <summary>
     /// Verifica se há alguma OS aberta para o patrimônio informado.
@@ -275,14 +357,16 @@ public class OsDAO
         {
             string query = @"
             SELECT 
-                id_solicitacao,
-                andar,
-                local,
-                SET_A_DES,
-                descricaoServico,
-                dataSolicitacao,
-                status,
-                patrimonio
+                [id_solicitacao]
+      ,[andar]
+      ,[local]
+      ,[descricaoServico]
+      ,[dataSolicitacao]
+      ,[status]
+      ,[patrimonio]
+      ,[NomeCompleto]
+      ,[loginSolicitante]
+      ,[descricaoCentroDeCusto]
             FROM Vw_HistoricoOS
             WHERE loginSolicitante = @loginSolicitante
             ORDER BY id_solicitacao DESC";
@@ -300,7 +384,7 @@ public class OsDAO
                 s.idSolicitacao = Convert.ToInt32(reader["id_solicitacao"]);
                 s.andar = reader["andar"].ToString();
                 s.localDaSolicitacao = reader["local"].ToString();
-                s.descricaoCentroCusto = reader["SET_A_DES"].ToString();
+                s.descricaoCentroCusto = reader["descricaoCentroDeCusto"].ToString();
                 s.descServicoSolicitado = reader["descricaoServico"].ToString();
                 s.dataSolicitacao = reader["dataSolicitacao"] != DBNull.Value
                     ? Convert.ToDateTime(reader["dataSolicitacao"])
@@ -331,19 +415,19 @@ public class OsDAO
         {
             // Consulta para retornar todos os usuários que compartilham o mesmo centro de custo
             string query = @"
-            SELECT DISTINCT 
-                NomeCompleto, 
-                loginRede, 
-                SET_A_DES, 
-                Codigo_centroCusto,
-                RSP_A_NOME
-            FROM Vw_DadosUsuario_DadosRespCusto
-            WHERE Codigo_centroCusto IN (
-                SELECT DISTINCT Codigo_centroCusto
-                FROM Vw_DadosUsuario_DadosRespCusto
-                WHERE loginRede = @loginSolicitante
-            )
-            ORDER BY Codigo_centroCusto";
+            SELECT  
+    nomeUsuario, 
+    loginRedeUsuario, 
+    descricao, 
+    codigoCentroDeCusto,
+    nomeResponsavel
+FROM Vw_DadosUsuario_DadosRespCusto
+WHERE codigoCentroDeCusto IN (
+    SELECT  codigoCentroDeCusto
+    FROM Vw_DadosUsuario_DadosRespCusto
+    WHERE loginRedeUsuario =@loginSolicitante
+)
+ORDER BY codigoCentroDeCusto;";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@loginSolicitante", login);
@@ -354,11 +438,11 @@ public class OsDAO
             while (reader.Read())
             {
                 var s = new SolicitanteDados();
-                s.nomeSolicitante = reader["NomeCompleto"].ToString();
-                s.loginSolicitante = reader["loginRede"].ToString();
-                s.descricaoCentroCusto = reader["SET_A_DES"].ToString();
-                s.codCentroCusto = Convert.ToInt32(reader["Codigo_centroCusto"]);
-                s.nomeResponsavel_Custo = reader["RSP_A_NOME"].ToString();
+                s.nomeSolicitante = reader["nomeUsuario"].ToString();
+                s.loginSolicitante = reader["loginRedeUsuario"].ToString();
+                s.descricaoCentroCusto = reader["descricao"].ToString();
+                s.codCentroCusto = Convert.ToInt32(reader["codigoCentroDeCusto"]);
+                s.nomeResponsavel_Custo = reader["nomeResponsavel"].ToString();
 
                 lista.Add(s);
             }
@@ -366,11 +450,12 @@ public class OsDAO
 
         return lista;
     }
+    // Replace all usages of string.IsNullOrWhiteSpace with a compatible implementation for .NET 3.5
+    private static bool IsNullOrWhiteSpace(string value)
+    {
+        return value == null || value.Trim().Length == 0;
+    }
 
 
-    // Você pode continuar a refatorar os outros métodos seguindo esse mesmo padrão:
-    // - Uso de `using` para garantir fechamento de conexões
-    // - Nomes claros
-    // - Comentários objetivos
-    // - Conversão segura de tipos
+   
 }

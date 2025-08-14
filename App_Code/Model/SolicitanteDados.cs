@@ -23,11 +23,12 @@ public class SolicitanteDados
     public string localDaSolicitacao { get; set; }
     public string descServicoSolicitado { get; set; }
     public string obs { get; set; }
-    public int codRespCentroCusto { get; set; }
+    public string codRespCentroCusto { get; set; }
     public string ramalSolicitante { get; set; }
     public string ramalRespSetor { get; set; }
     public int idSolicitacao { get; set; }
     public DateTime dataSolicitacao { get; set; }
     public string statusSolicitacao { get; set; }
 
+    public int rfUsuario { get; set; }
 }

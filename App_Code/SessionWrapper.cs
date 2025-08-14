@@ -15,15 +15,12 @@ public static class SessionWrapper
         set { HttpContext.Current.Session["nomeUsuario"] = value; }
     }
 
-    public static int CodRespCusto
+    public static string LoginResponsavel
     {
-        get
-        {
-            object valor = HttpContext.Current.Session["codRespCusto"];
-            return valor != null ? (int)valor : 0;
-        }
-        set { HttpContext.Current.Session["codRespCusto"] = value; }
+        get { return HttpContext.Current.Session["loginResponsavel"] as string; }
+        set { HttpContext.Current.Session["loginResponsavel"] = value; }
     }
+   
 
     public static List<int> Perfis
     {

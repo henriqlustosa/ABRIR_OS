@@ -65,8 +65,11 @@ public partial class SolicitarOS : Page
             SolicitanteDados dados = lista[0];
             txtNomeUsuario.Text = dados.nomeSolicitante;
             txtRfUsuario.Text = dados.rfSolicitante;
+            txtRfResponsavel.Text = dados.rfResponsavelCusto;
+           txtNomeResponsavel.Text = dados.nomeResponsavel_Custo;
         }
     }
+
 
     private void CarregarDropDownSetores(string login)
     {
@@ -84,7 +87,8 @@ public partial class SolicitarOS : Page
         else if (lista.Count == 1)
         {
             ddlSetor.SelectedIndex = 0;
-            PreencherResponsavelCentroCusto(ddlSetor.SelectedValue);
+            PreencherResponsavelCentroCusto(ddlSetor.SelectedValue.ToString());
+            txtCentrodeCusto.Text = ddlSetor.SelectedValue.ToString();
         }
     }
 
@@ -122,7 +126,8 @@ public partial class SolicitarOS : Page
             SolicitanteDados item = lista[0];
             txtNomeResponsavel.Text = item.nomeResponsavel_Custo;
             txtRfResponsavel.Text = item.rfResponsavelCusto;
-            SessionWrapper.CodRespCusto = item.codRespCentroCusto;
+        
+            SessionWrapper.LoginResponsavel = item.codRespCentroCusto.ToString();
         }
     }
 
@@ -157,19 +162,36 @@ public partial class SolicitarOS : Page
 
     protected void btnSolicitarOS_Click(object sender, EventArgs e)
     {
+
+        string loginUsuario = SessionWrapper.Login;
+     string loginUsuarioResposavel = SessionWrapper.LoginResponsavel;
+     string codRespCentroCusto = txtCentrodeCusto.Text;
+     int    codPatrimonio =  Convert.ToInt32(txtPatrimonio.Text);
         if (!ValidarCamposObrigatorios()) return;
 
         try
         {
-            SolicitanteDados solicitacao = CriarSolicitacao();
+            var solicitacao = new Solicitacao_Pedido(
+  loginUsuario,
+    loginUsuarioResposavel,
+    codRespCentroCusto,
+    txtPatrimonio.Text,
+    txtAndar.Text,
+    txtLocal.Text,
+    txtDescricao.Text,
+    txtObs.Text,
+    txtRamalUsuario.Text,
+    txtRamalResponsavel.Text
+);
 
-            if (solicitacao.codRespCentroCusto < 1)
-            {
+
+            if (string.IsNullOrEmpty(codRespCentroCusto)
+     || codRespCentroCusto.Trim().Length == 0) { 
                 RedirecionarComAlerta("Algo deu errado. Tente novamente.");
                 return;
             }
 
-            List<SolicitanteDados> osAbertas = OsDAO.VerificaOsAbertaPatrimonio(solicitacao.codPatrimonio);
+            List<SolicitanteDados> osAbertas = OsDAO.VerificaOsAbertaPatrimonio(codPatrimonio);
             if (osAbertas.Count > 0)
             {
                 SolicitanteDados os = osAbertas[0];
@@ -216,22 +238,7 @@ public partial class SolicitarOS : Page
         return true;
     }
 
-    private SolicitanteDados CriarSolicitacao()
-    {
-        SolicitanteDados s = new SolicitanteDados();
-        s.codCentroCusto = Convert.ToInt32(txtCentrodeCusto.Text);
-        s.codRespCentroCusto = SessionWrapper.CodRespCusto;
-        s.loginSolicitante = SessionWrapper.Login;
-        s.rfSolicitante = txtRfUsuario.Text;
-        s.codPatrimonio = Convert.ToInt32(txtPatrimonio.Text);
-        s.andar = txtAndar.Text;
-        s.localDaSolicitacao = txtLocal.Text;
-        s.descServicoSolicitado = txtDescricao.Text;
-        s.obs = txtObs.Text;
-        s.ramalSolicitante = txtRamalUsuario.Text;
-        s.ramalRespSetor = txtRamalResponsavel.Text;
-        return s;
-    }
+   
 
     private void MostrarMensagem(string msgHtml)
     {
