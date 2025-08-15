@@ -56,7 +56,7 @@ public class Solicitacao_Pedido
         DataSolicitacao = DateTime.Now;
         // In the constructor, this assignment is now valid:
         DataFinalizacao = null;
-        Status = 0;
+        Status = 1;
     }
 
     private int ObterIdUsuarioPorLogin(string login)

@@ -31,4 +31,5 @@ public class SolicitanteDados
     public string statusSolicitacao { get; set; }
 
     public int rfUsuario { get; set; }
+    public string diretoria { get; set; }
 }

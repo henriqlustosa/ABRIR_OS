@@ -331,19 +331,26 @@ SELECT CAST(SCOPE_IDENTITY() AS INT);";
     /// <summary>
     /// Converte o código de status numérico para descrição textual.
     /// </summary>
-    private static string ObterDescricaoStatus(int status)
+    private static string ObterDescricaoStatus(int statusId)
     {
-        switch (status)
+        using (SqlConnection con = new SqlConnection(connectionString))
+        using (SqlCommand cmd = new SqlCommand(@"
+        SELECT Nome 
+        FROM dbo.StatusDaSolicitacao 
+        WHERE StatusId = @StatusId", con))
         {
-            case 0: return "Aguardando";
-            case 1: return "Recebido";
-            case 2: return "Executando";
-            case 3: return "Em espera";
-            case 4: return "Finalizado";
-            case 5: return "Recusado";
-            default: return "Desconhecido";
+            cmd.Parameters.AddWithValue("@StatusId", statusId);
+
+            con.Open();
+            object result = cmd.ExecuteScalar();
+
+            if (result != null && result != DBNull.Value)
+                return result.ToString();
+
+            return "Desconhecido"; // valor padrão caso não encontre
         }
     }
+
     /// <summary>
     /// Retorna o histórico de solicitações de OS realizadas por um determinado login de solicitante.
     /// </summary>
@@ -420,7 +427,8 @@ SELECT CAST(SCOPE_IDENTITY() AS INT);";
     loginRedeUsuario, 
     descricao, 
     codigoCentroDeCusto,
-    nomeResponsavel
+    nomeResponsavel,
+diretoria
 FROM Vw_DadosUsuario_DadosRespCusto
 WHERE codigoCentroDeCusto IN (
     SELECT  codigoCentroDeCusto
@@ -443,7 +451,7 @@ ORDER BY codigoCentroDeCusto;";
                 s.descricaoCentroCusto = reader["descricao"].ToString();
                 s.codCentroCusto = Convert.ToInt32(reader["codigoCentroDeCusto"]);
                 s.nomeResponsavel_Custo = reader["nomeResponsavel"].ToString();
-
+                s.diretoria = reader["diretoria"].ToString();
                 lista.Add(s);
             }
         }
