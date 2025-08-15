@@ -95,6 +95,7 @@ public class OsDAO
                 var s = new SolicitanteDados();
                 s.codCentroCusto = Convert.ToInt32(reader["codigoCentroDeCusto"]);
                 s.descricaoCentroCusto = reader["codigoCentroDeCusto"] + " - " + reader["descricaoCentroDeCusto"].ToString();
+               
                 lista.Add(s);
             }
         }
