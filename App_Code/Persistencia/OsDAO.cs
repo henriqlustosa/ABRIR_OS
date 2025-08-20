@@ -305,7 +305,7 @@ SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 FROM Vw_VericaOsAbertaPatrimonio
                 WHERE (status <> 4 AND status <> 5)
                   AND patrimonio = @patrimonio
-                  AND patrimonio != 46879";
+                  AND patrimonio != 46879 AND patrimonio != 1";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@patrimonio", patrimonio);
