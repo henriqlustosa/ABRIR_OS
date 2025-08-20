@@ -93,7 +93,7 @@
                         <div class="alinhaLblTxt divEquipamento">
                             <asp:Label ID="Label6" runat="server" Text="Equipamento:" />
                             <asp:TextBox ID="txtEquipamento" CssClass="ddlEquipamento input" runat="server"
-                                placeholder="**Serviços sem Patrimônio: digite 46879**" data-obrigatorio="true" />
+                                placeholder="**Serviços sem Patrimônio: digite 46879**" data-obrigatorio="true" ReadOnly="True" />
                         </div>
                     </div>
 
@@ -289,7 +289,7 @@
                 case 'ctl00$ContentPlaceHolder1$txtCentrodeCusto': return 'Centro de Custo';
                 case 'ctl00$ContentPlaceHolder1$txtRamalUsuario': return 'Ramal do Usuário';
                 case 'ctl00$ContentPlaceHolder1$txtPatrimonio': return 'Patrimônio';
-                case 'ctl00$ContentPlaceHolder1$txtEquipamento': return 'Equipamento';
+                case 'ctl00$ContentPlaceHolder1$txtEquipamento': return 'Caso o patrimônio não exista na base de dados Coloque 1 no campo patrimônio e pesquise, o campo Equipamento';
                 case 'ctl00$ContentPlaceHolder1$txtAndar': return 'Andar';
                 case 'ctl00$ContentPlaceHolder1$txtLocal': return 'Local';
                 case 'ctl00$ContentPlaceHolder1$txtDescricao': return 'Descrição do serviço';

@@ -245,7 +245,8 @@ public partial class SolicitarOS : Page
                   .Append(HttpUtility.HtmlEncode(chapa.ToString()))
                   .Append("</strong> não encontrado.<br>")
                   .Append("Verifique o número.<br>")
-                  .Append("Se não existir cadastro, descreva o equipamento no campo <strong>Equipamento</strong>.");
+                  .Append("Se não existir cadastro, digite 1 no campo <strong>Patrimônio</strong>.<br>")
+                  .Append("Infomre o Nº e descrição do patrimônio no campo <strong>Observações</strong>.");
 
                 MostrarMensagem(sb.ToString());
                 txtEquipamento.Focus();
@@ -290,7 +291,7 @@ public partial class SolicitarOS : Page
         int codPatrimonio;
         if (!TentarObterPatrimonio(out codPatrimonio))
             return;
-
+      
         try
         {
             // 3) Modelo para persistência
